@@ -4,7 +4,16 @@ function getId(id){
 
 const categoriesContainer = getId('categoriesContainer');
 const treesContainer = getId('treesContainer')
+const loadingSpinner = getId('loadingSpinner')
 
+function showLoading(){
+    loadingSpinner.classList.remove('hidden')
+    treesContainer.innerHTML = ''
+}
+function hideLoading(){
+    loadingSpinner.classList.add('flex')
+    
+}
 
 async function loadCategories() {
     
@@ -47,27 +56,30 @@ async function loadCategories() {
 // }
 
 async function loadTrees() {
+    showLoading()
     const res = await fetch('https://openapi.programming-hero.com/api/plants')
     const data = await res.json()
+    hideLoading()
     displayTrees(data.plants)
 }
 
 const displayTrees = (trees) => {
-console.log(trees)
+console.log(trees);
 trees.forEach(tree => {
     const card = document.createElement('div')
      card.className = "card bg-white shadow-sm"
-     card.innerHTML = `<figure>
+     card.innerHTML = `
+     <figure>
         <img
           src="${tree.image}"
           alt="${tree.name}"
           title="${tree.name}"
           class="h-48 w-full object-cover cursor-pointer"
-        //   onclick="openTreeModal(${tree.id})"
+          onclick="openTreeModal(${tree.id})"
         />
       </figure>
       <div class="card-body">
-        <h2 class="card-title cursor-pointer hover:text-[#4ade80]" onclick="openTreeModal(${tree.id})">${tree.name}</h2>
+        <h2 class="card-title cursor-pointer hover:text-[#4ade80]">${tree.name}</h2>
         <p class="line-clamp-2">
           ${tree.description}
         </p>
@@ -77,9 +89,11 @@ trees.forEach(tree => {
           <h2 class="font-bold text-xl ${tree.price > 500 ? "text-red-500" : "text-[#4ade80]"}">$${tree.price}</h2>
           <button class="btn btn-primary" onclick="addToCart(${tree.id}, '${tree.name}', ${tree.price})">Cart</button>
         </div>
-      </div>`;
+      </div>
+      `;
     treesContainer.appendChild(card)
-    })
+
+})
 }
 
 loadCategories()
