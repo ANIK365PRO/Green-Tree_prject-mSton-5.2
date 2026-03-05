@@ -5,13 +5,14 @@ function getId(id){
 const categoriesContainer = getId('categoriesContainer');
 const treesContainer = getId('treesContainer')
 const loadingSpinner = getId('loadingSpinner')
+const allTreesBtn = getId('allTreesBtn')
 
 function showLoading(){
     loadingSpinner.classList.remove('hidden')
     treesContainer.innerHTML = ''
 }
 function hideLoading(){
-    loadingSpinner.classList.add('flex')
+    loadingSpinner.classList.add('hidden')
     
 }
 
@@ -19,41 +20,62 @@ async function loadCategories() {
     
     const res = await fetch("https://openapi.programming-hero.com/api/categories");
     const data = await res.json()
-    // console.log(data.categories)
+    console.log(data.categories)
     // console.log(categoriesContainer)
 
     data.categories.forEach(category => {
-
+        
         const btn = document.createElement('button')
-         btn.className = "btn btn-primary w-full"
+         btn.className = "btn w-full"
          btn.textContent = category.category_name;
          btn.onclick = () => selectCategory(category.id, btn);
-
          categoriesContainer.appendChild(btn)
     })
 }
 
-// async function selectCategory(categoryId, btn) {
-//     console.log(categoryId, btn)
+// for other btn click 
+async function selectCategory(categoryId, btn) {
+    // console.log(categoryId, btn)
+    showLoading()
     
-//     const allButtons = document.querySelectorAll(
-//     "#categoriesContainer button, #allTreesBtn",); 
-//     allButtons.forEach(btn => {
-//         btn.classList.remove('btn-primary')
-//         btn.classList.add('btn-outline')
-//     })
+    const allButtons = document.querySelectorAll(
+    "#categoriesContainer button, #allTreesBtn",); 
+    allButtons.forEach(btn => {
+        btn.classList.remove('btn-primary')
+        btn.classList.add('btn-outline')
+    })
 
-//     btn.classList.add('btn-primary')
-//     btn.classList.remove('btn-outline')
+    btn.classList.add('btn-primary')
+    btn.classList.remove('btn-outline')
 
 
-//     const res = await fetch(
-//     `https://openapi.programming-hero.com/api/category/${categoryId}`);
-//     const data = await res.json();
-//     console.log(data);
-//     // displayTrees(data.plants);
+    const res = await fetch(
+    `https://openapi.programming-hero.com/api/category/${categoryId}`);
+    const data = await res.json();
+    // console.log(data);
 
-// }
+    displayTrees(data.plants);
+    
+    hideLoading()
+}
+
+// for all btn click
+allTreesBtn.addEventListener('click', () =>{
+    showLoading()
+    
+    const allButtons = document.querySelectorAll(
+    "#categoriesContainer button, #allTreesBtn",); 
+    allButtons.forEach(btn => {
+        btn.classList.remove('btn-primary')
+        btn.classList.add('btn-outline')
+    })
+
+    allTreesBtn.classList.add('btn-primary')
+    allTreesBtn.classList.remove('btn-outline')
+
+    loadTrees()
+})
+
 
 async function loadTrees() {
     showLoading()
@@ -64,7 +86,7 @@ async function loadTrees() {
 }
 
 const displayTrees = (trees) => {
-console.log(trees);
+// console.log(trees);
 trees.forEach(tree => {
     const card = document.createElement('div')
      card.className = "card bg-white shadow-sm"
