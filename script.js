@@ -16,6 +16,8 @@ const modalTitle = getId("modalTitle");
 
 const cartContainer = getId("cartContainer");
 const totalPrice = getId("totalPrice");
+const emptyCartMessage = getId('emptyCartMessage')
+
 let cart = []
 
 function showLoading(){
@@ -172,6 +174,16 @@ function updateCart(){
     console.log(cart)
     cartContainer.innerHTML = ''
 
+    // for initially empty message 
+    if (cart.length === 0) {
+        emptyCartMessage.classList.remove("hidden");
+        totalPrice.textContent = `$ ${0}`;
+        return;
+    }
+    // when card add to cart
+    emptyCartMessage.classList.add("hidden");
+    
+
     let total = 0;
     cart.forEach(item => {
         total += item.price * item.quantity
@@ -185,12 +197,12 @@ function updateCart(){
                 </div>
                 <button class="btn btn-ghost" onclick="removeFromCart(${item.id})">X</button>
             </div>
-           <p class="text-right font-semibold text-2xl">${item.price * item.quantity}</p>
+           <p class="text-right font-semibold text-2xl">$ ${item.price * item.quantity}</p>
 
         `
         cartContainer.appendChild(div)
     })
-    totalPrice.innerText = total;
+    totalPrice.innerText = `$ ${total}`;
 }
 
 function removeFromCart(treeId) {
