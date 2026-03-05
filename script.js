@@ -6,6 +6,15 @@ const categoriesContainer = getId('categoriesContainer');
 const treesContainer = getId('treesContainer')
 const loadingSpinner = getId('loadingSpinner')
 const allTreesBtn = getId('allTreesBtn')
+const treeDetailsModal = getId('tree-details-modal')
+
+const modalImage = getId("modalImage");
+const modalCategory = getId("modalCategory");
+const modalDescription = getId("modalDescription");
+const modalPrice = getId("modalPrice");
+const modalTitle = getId("modalTitle");
+const cartContainer = getId("cartContainer");
+const totalPrice = getId("totalPrice");
 
 function showLoading(){
     loadingSpinner.classList.remove('hidden')
@@ -15,7 +24,7 @@ function hideLoading(){
     loadingSpinner.classList.add('hidden')
     
 }
-
+//load categories sl.1
 async function loadCategories() {
     
     const res = await fetch("https://openapi.programming-hero.com/api/categories");
@@ -33,7 +42,7 @@ async function loadCategories() {
     })
 }
 
-// for other btn click 
+// for other btn click sl.4
 async function selectCategory(categoryId, btn) {
     // console.log(categoryId, btn)
     showLoading()
@@ -59,7 +68,7 @@ async function selectCategory(categoryId, btn) {
     hideLoading()
 }
 
-// for all btn click
+// for all btn click sl.5
 allTreesBtn.addEventListener('click', () =>{
     showLoading()
     
@@ -76,7 +85,7 @@ allTreesBtn.addEventListener('click', () =>{
     loadTrees()
 })
 
-
+// load trees sl.2
 async function loadTrees() {
     showLoading()
     const res = await fetch('https://openapi.programming-hero.com/api/plants')
@@ -84,7 +93,7 @@ async function loadTrees() {
     hideLoading()
     displayTrees(data.plants)
 }
-
+// load trees to display trees sl.3
 const displayTrees = (trees) => {
 // console.log(trees);
 trees.forEach(tree => {
@@ -101,7 +110,8 @@ trees.forEach(tree => {
         />
       </figure>
       <div class="card-body">
-        <h2 class="card-title cursor-pointer hover:text-[#4ade80]">${tree.name}</h2>
+        <h2 class="card-title cursor-pointer hover:text-[#4ade80]" onclick="showTreeModal(${tree.id})">${tree.name}</h2>
+
         <p class="line-clamp-2">
           ${tree.description}
         </p>
@@ -116,6 +126,24 @@ trees.forEach(tree => {
     treesContainer.appendChild(card)
 
 })
+}
+
+// display trees to single modal
+async function showTreeModal(treeId){
+    // console.log(treeId)
+
+    const res = await fetch(`https://openapi.programming-hero.com/api/plant/${treeId}`)
+    const data = await res.json()
+    const plantDetails = data.plants
+    // console.log(plantDetails)
+
+    modalTitle.textContent = plantDetails.name;
+    modalImage.src = plantDetails.image;
+    modalCategory.textContent = plantDetails.category;
+    modalDescription.textContent = plantDetails.description;
+    modalPrice.textContent = plantDetails.price;
+    treeDetailsModal.showModal()
+
 }
 
 loadCategories()
