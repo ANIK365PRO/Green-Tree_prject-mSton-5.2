@@ -16,7 +16,7 @@
 
 </head>
 
-<body>
+<body class="bg-base-200">
     <header class="container mx-auto mb-20">
         <!-- navigation bar  -->
         <div class="navbar bg-base-100 shadow-sm">
@@ -64,6 +64,106 @@
 
     </header>
 
+    <!-- Choose Your Trees container  -->
+
+     <main class="container mx-auto">
+
+
+
+
+        <h2 class="text-[#4ade80] font-bold text-4xl text-center">Choose Your Trees</h2>
+
+        <div class="grid grid-cols-12 gap-8">
+
+            <!-- Categories button-->
+            <section class="bg-white card card-body shadow-2xl col-span-3">
+                <h2 class="font-bold text-2xl text-center">Categories</h2>
+
+                <div class="space-y-3 sticky top-8">
+                    <button class="btn btn-primary w-full" id="allTreesbtn">All Trees</button>
+
+                    <!-- Categories container -->
+                    <div id="categoriesContainer" class="space-y-3">
+                        <!-- Categories will be dynamically loaded here by JS -->
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Trees -->
+            <section class="bg-white card card-body shadow-2xl col-span-6">
+                <!-- Trees will rendered -->
+                <div id="treesContainer" class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <!-- Dynamically added here -->
+
+                    <!-- <div class="card bg-white shadow-sm">
+                        <figure>
+                            <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                                alt="Shoes" />
+                        </figure>
+                        <div class="card-body">
+                            <h2 class="card-title">Card Title</h2>
+                            <p class="line-clamp-2">A card component has a figure, a body part, and inside body there
+                                are title and actions lorem1500
+                                parts</p>
+                            <div class="badge badge-success badge-outline">Success</div>
+
+                            <div class="flex justify-between items-center">
+                                <h2 class="font-bold text-xl text-[#4ade80]">$5000</h2>
+                                <button class="btn btn-primary ">Buy Now</button>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+
+                <!-- loading spinner -->
+                <div id="loadingSpinner" class="h-[60vh] flex hidden justify-center items-center">
+                    <span class="loading loading-dots loading-xl"></span>
+                </div>
+
+
+            </section>
+
+            <!-- Cart -->
+            <section class="bg-white card card-body shadow-2xl col-span-3">
+                <h2 class="font-bold text-3xl mb-2">Cart</h2>
+
+                <div class="space-y-4">
+                    <div id="cartContainer" class="space-y-4">
+                        <!-- <div class="card card-body bg-slate-100">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h2>Name</h2>
+                                    <p> $2000 × 10</p>
+                                </div>
+                                <button class="btn btn-ghost">X</button>
+                            </div>
+                            <p class="text-right font-semibold text-xl">$500</p>
+                        </div> -->
+                    </div>
+
+                    <div id="emptyCartMessage" class="text-center py-4">
+                        <p>Your cart is empty</p>
+                        <p>Add trees to get started</p>
+                    </div>
+
+
+                    <!-- Total amount -->
+                    <div class="flex justify-between items-center bg-green-50 rounded-lg p-4 my-3 font-bold">
+                        <span>Total:</span>
+                        <span id="totalPrice">$0</span>
+                    </div>
+
+                </div>
+
+
+            </section>
+        </div>
+
+
+
+
+    </main>
    
 
 
